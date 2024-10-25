@@ -1,9 +1,9 @@
 # python package template
 
-[![ci](https://github.com/fopina/example/actions/workflows/publish-main.yml/badge.svg)](https://github.com/fopina/example/actions/workflows/publish-main.yml)
-[![PyPI pyversions](https://img.shields.io/pypi/pyversions/fp-github-template-example.svg)](https://pypi.python.org/pypi/fp-github-template-example/)
-[![PyPI version](https://badge.fury.io/py/fp-github-template-example.svg)](https://badge.fury.io/py/fp-github-template-example)
-[![Very popular](https://img.shields.io/pypi/dm/fp-github-template-example)](https://pypistats.org/packages/fp-github-template-example)
+[![ci](https://github.com/fopina/pyproject-pipenv/actions/workflows/publish-main.yml/badge.svg)](https://github.com/fopina/pyproject-pipenv/actions/workflows/publish-main.yml)
+[![PyPI pyversions](https://img.shields.io/pypi/pyversions/pyproject-pipenv.svg)](https://pypi.python.org/pypi/pyproject-pipenv/)
+[![PyPI version](https://badge.fury.io/py/pyproject-pipenv.svg)](https://badge.fury.io/py/pyproject-pipenv)
+[![Very popular](https://img.shields.io/pypi/dm/pyproject-pipenv)](https://pypistats.org/packages/pyproject-pipenv)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 ## Content
