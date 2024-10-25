@@ -1,4 +1,4 @@
-# python package template
+# pyproject-pipenv
 
 [![ci](https://github.com/fopina/pyproject-pipenv/actions/workflows/publish-main.yml/badge.svg)](https://github.com/fopina/pyproject-pipenv/actions/workflows/publish-main.yml)
 [![PyPI pyversions](https://img.shields.io/pypi/pyversions/pyproject-pipenv.svg)](https://pypi.python.org/pypi/pyproject-pipenv/)
@@ -6,20 +6,24 @@
 [![Very popular](https://img.shields.io/pypi/dm/pyproject-pipenv)](https://pypistats.org/packages/pyproject-pipenv)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-## Content
+Sync dependencies in Pipfile to pyproject.toml.
 
-* `pytest` for tests: `make test`
-* `ruff` for linting/formatting: `make lint` (replaces both `black` and `isort`)
-* `.github` with actions ready to be used
-    * [test](.github/workflows/test.yml) runs lint checks and unit tests
-    * [publish-dev](.github/workflows/publish-dev.yml) publishes feature branches (`dev`/`dev-*`) to [testpypi](https://test.pypi.org)
-    * [publish-main](.github/workflows/publish-main.yml) publishes semver tags to [pypi](https://pypi.org)
+Never need again to change dependencies manually in pyproject.toml (or forget to do it and publish a broken package), and enjoy the same dependency locking or semantic versioning.
 
-## New project checklist
+Also allows just checking to be used as part of CI lint/format steps.
 
-* [ ] Replace folder `example` with the actual package
-* [ ] Replace `LICENSE` if MIT does not apply
-* [ ] Search the project for `# TODO` to find the (minimum list of) places that need to be changed.
-* [ ] Add PYPI credentials to secrets
-    * `PYPI_USERNAME` and `PYPI_TOKEN` to publish tags to pypi
-    * `TESTPYPI_USERNAME` and `TESTPYPI_TOKEN` to publish dev branches to testpypi
+## Usage
+
+...
+
+## Context
+
+For some reason, neither pyproject nor pipenv interact with each other:
+* You use `pipenv` (and `Pipfile`) while developing, because it's great
+* You add all the package details to `pyproject.toml`
+* You work on the code and add new dependencies
+* Then you publish the new version only to notice you forgot to add the dependencies *also* to pyproject `dependencies` entry...
+
+[dephell](https://github.com/dephell/dephell) seemed to be a solution but it is dead. Forking it sounds too much, as it supports many different things than I need.
+
+[pipenv-setup](https://github.com/Madoshakalaka/pipenv-setup/) seems to be the same but for `setup.py` instead of `pyproject.toml`. Probably a good source for inspiration after this initial version.
