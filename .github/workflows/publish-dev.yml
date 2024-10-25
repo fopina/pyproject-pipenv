@@ -1,0 +1,22 @@
+name: 👷 publish dev
+
+on:
+  push:
+    # TODO: choose your "feature branch" naming (or leave it like this)
+    # or run this on every non-main branch, replacing the whole `branches` with
+    # branches-ignore:
+    #   - main
+    branches: 
+      - dev
+      - dev/*
+      - dev-*
+
+jobs:
+  test_and_publish:
+    uses: ./.github/workflows/publish.yml
+    with:
+      version: '${{ github.run_number }}.0.0'
+      repository: testpypi
+    secrets:
+      twine_username: ${{ secrets.TESTPYPI_USERNAME }}
+      twine_password: ${{ secrets.TESTPYPI_TOKEN }}
