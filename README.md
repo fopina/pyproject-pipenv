@@ -16,6 +16,10 @@ Also allows just checking to be used as part of CI lint/format steps.
 
 ...
 
+## ToDo
+
+* Handle markers and all that extra crap besides version
+
 ## Context
 
 For some reason, neither pyproject nor pipenv interact with each other:
