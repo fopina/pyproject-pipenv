@@ -2,7 +2,7 @@ import argparse
 import sys
 from pathlib import Path
 
-from .convert import Converter
+from .converter import Converter
 
 
 def main():

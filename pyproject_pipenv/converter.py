@@ -20,16 +20,18 @@ class Converter:
 
     def pipfile_list(self):
         packages = []
-        for name, version_dict in self.pipfile_data.get('packages', {}).items():
+        for name, version_dict in self.pipfile_content.get('packages', {}).items():
             if isinstance(version_dict, dict):
                 version = version_dict['version']
             else:
                 version = version_dict
+            if version == '*':
+                version = ''
             packages.append(f'{name}{version}')
         return packages
 
     def pyproject_list(self):
-        return self.pyproject_data['project']['dependencies']
+        return self.pyproject_content['project']['dependencies']
 
     def diff(self):
         pp = set(self.pyproject_list())
@@ -41,6 +43,6 @@ class Converter:
         return extra, missing
 
     def sync(self):
-        self.pyproject_data['project']['dependencies'] = self.pipfile_list()
+        self.pyproject_content['project']['dependencies'] = self.pipfile_list()
         with open(self.pyproject_path, 'w') as f:
-            f.write(tomlkit.dumps(self.pyproject_data))
+            f.write(tomlkit.dumps(self.pyproject_content))
