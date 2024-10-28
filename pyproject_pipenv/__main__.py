@@ -5,12 +5,12 @@ from pathlib import Path
 from .converter import Converter
 
 
-def main():
+def main(argv=None):
     p = argparse.ArgumentParser()
     p.add_argument('-f', '--pipfile', type=Path, default='Pipfile', help='Path to Pipfile')
     p.add_argument('-t', '--pyproject', type=Path, default='pyproject.toml', help='Path to pyproject.toml')
     p.add_argument('--fix', action='store_true', help='Apply required changes')
-    args = p.parse_args()
+    args = p.parse_args(argv)
 
     c = Converter(args.pipfile, args.pyproject)
     diff = c.diff()
