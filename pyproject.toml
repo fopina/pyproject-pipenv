@@ -9,7 +9,7 @@ dynamic = ["version"]
 description = "Sync requirements from Pipfile to pyproject.toml"
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = []
+dependencies = ["tomlkit<1.0.0"]
 
 [project.urls]
 Homepage = "https://github.com/fopina/pyproject-pipenv"
