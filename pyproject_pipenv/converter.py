@@ -32,6 +32,9 @@ class Converter:
                 version = version_dict
             if version == '*':
                 version = ''
+            elif version[0].isdigit():
+                # manually edited Pipfile can have version without operator and it is valid
+                version = f'=={version}'
             packages.append(f'{name}{version}')
         return packages
 

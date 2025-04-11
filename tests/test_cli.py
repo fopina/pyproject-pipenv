@@ -70,3 +70,18 @@ class Test(unittest.TestCase):
             )
             # modified
             self.assertEqual((DATA / 'pyproject.3.fixed.toml').read_text(), tmpf.read_text())
+
+    def test_fix_dep_without_operator(self):
+        """https://github.com/fopina/pyproject-pipenv/issues/4"""
+        with tempfile.NamedTemporaryFile() as tmp:
+            tmp.seek(0)
+            tmpf = Path(tmp.name)
+            source = DATA / 'pyproject.1.toml'
+            tmpf.write_text(source.read_text())
+            with mock.patch('sys.stdout', new_callable=io.StringIO) as mock_stdout:
+                ppmain.main(['--pipfile', str(DATA / 'Pipfile.4'), '--pyproject', str(tmpf), '--fix'])
+            self.assertEqual(
+                mock_stdout.getvalue(),
+                'Dependencies out of sync:\n- requests\n+ requests==2.0.0\npyproject.toml UPDATED!\n',
+            )
+            self.assertIn('requests==2.0.0', tmpf.read_text())
