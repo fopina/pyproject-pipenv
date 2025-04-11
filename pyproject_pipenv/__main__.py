@@ -15,24 +15,22 @@ def main(argv=None):
     c = Converter(args.pipfile, args.pyproject)
     diff = c.diff()
 
-    if diff is None:
-        print('pyproject.toml dependecies are up to date')
+    if diff.empty:
+        print('pyproject.toml is up to date')
         return
 
-    extra, missing = diff
-    if extra:
-        for r in extra:
-            print(f'- {r}')
-    if missing:
-        for r in missing:
-            print(f'+ {r}')
+    if diff.deps:
+        print(f'Dependencies out of sync:\n{diff.deps}')
+
+    if diff.version:
+        print(f'Version out of sync: {diff.version}')
 
     if not args.fix:
-        print('pyproject.toml dependencies NEED UPDATE!')
+        print('pyproject.toml NEEDS UPDATE!')
         sys.exit(1)
 
     c.sync()
-    print('pyproject.toml dependencies UPDATED!')
+    print('pyproject.toml UPDATED!')
 
 
 if __name__ == '__main__':

@@ -6,19 +6,53 @@
 [![Very popular](https://img.shields.io/pypi/dm/pyproject-pipenv)](https://pypistats.org/packages/pyproject-pipenv)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-Sync dependencies in Pipfile to pyproject.toml.
+Sync properties from Pipfile to pyproject.toml.
 
 Never need again to change dependencies manually in pyproject.toml (or forget to do it and publish a broken package), and enjoy the same dependency locking or semantic versioning.
 
 Also allows just checking to be used as part of CI lint/format steps.
 
+## Install
+
+```
+# in your project virtualenv (or globally / pipx)
+$ pip install pyproject-pipenv
+...
+```
+
 ## Usage
 
-...
+Check:
+
+```
+$ pyproject-pipenv
+Dependencies out of sync:
+- tomlkit<2.0.0
++ tomlkit<1.0.0
+pyproject.toml NEEDS UPDATE!
+```
+
+Apply:
+
+```
+$ pyproject-pipenv --fix
+Dependencies out of sync:
+- tomlkit<2.0.0
++ tomlkit<1.0.0
+pyproject.toml UPDATED!
+```
+
+## Features
+
+* Syncs
+  * Dependencies
+  * Python version required
+
 
 ## ToDo
 
 * Handle markers and all that extra crap besides version
+* Sync more fields
 
 ## Context
 
