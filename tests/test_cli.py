@@ -18,7 +18,7 @@ class Test(unittest.TestCase):
             tmpf.write_text(source.read_text())
             with mock.patch('sys.stdout', new_callable=io.StringIO) as mock_stdout:
                 ppmain.main(['--pipfile', str(DATA / 'Pipfile.1'), '--pyproject', str(tmpf)])
-            self.assertEqual(mock_stdout.getvalue(), 'pyproject.toml dependecies are up to date\n')
+            self.assertEqual(mock_stdout.getvalue(), 'pyproject.toml is up to date\n')
             # unmodified
             self.assertEqual(source.read_text(), tmpf.read_text())
 
@@ -35,12 +35,13 @@ class Test(unittest.TestCase):
                 except SystemExit:
                     pass
             self.assertEqual(
-                mock_stdout.getvalue(), '- requests\n+ requests>=2.0.0\npyproject.toml dependencies NEED UPDATE!\n'
+                mock_stdout.getvalue(),
+                'Dependencies out of sync:\n- requests\n+ requests>=2.0.0\npyproject.toml NEEDS UPDATE!\n',
             )
             # unmodified
             self.assertEqual(source.read_text(), tmpf.read_text())
 
-    def test_fix_needs_changes(self):
+    def test_fix_deps_need_changes(self):
         with tempfile.NamedTemporaryFile() as tmp:
             tmp.seek(0)
             tmpf = Path(tmp.name)
@@ -49,7 +50,23 @@ class Test(unittest.TestCase):
             with mock.patch('sys.stdout', new_callable=io.StringIO) as mock_stdout:
                 ppmain.main(['--pipfile', str(DATA / 'Pipfile.2'), '--pyproject', str(tmpf), '--fix'])
             self.assertEqual(
-                mock_stdout.getvalue(), '- requests\n+ requests>=2.0.0\npyproject.toml dependencies UPDATED!\n'
+                mock_stdout.getvalue(),
+                'Dependencies out of sync:\n- requests\n+ requests>=2.0.0\npyproject.toml UPDATED!\n',
             )
             # modified
             self.assertEqual((DATA / 'pyproject.2.fixed.toml').read_text(), tmpf.read_text())
+
+    def test_fix_version_needs_changes(self):
+        with tempfile.NamedTemporaryFile() as tmp:
+            tmp.seek(0)
+            tmpf = Path(tmp.name)
+            source = DATA / 'pyproject.3.toml'
+            tmpf.write_text(source.read_text())
+            with mock.patch('sys.stdout', new_callable=io.StringIO) as mock_stdout:
+                ppmain.main(['--pipfile', str(DATA / 'Pipfile.3'), '--pyproject', str(tmpf), '--fix'])
+            self.assertEqual(
+                mock_stdout.getvalue(),
+                """Version out of sync: DiffVersion(pipfile='>=3.10,<4', pyproject='>=3.9')\npyproject.toml UPDATED!\n""",
+            )
+            # modified
+            self.assertEqual((DATA / 'pyproject.3.fixed.toml').read_text(), tmpf.read_text())
