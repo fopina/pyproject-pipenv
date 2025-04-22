@@ -47,7 +47,8 @@ class Converter:
     def diff(self) -> Diff:
         return Diff(
             deps=self.diff_dependencies(),
-            version=self.diff_version(),
+            # TODO: drop version as it DOES NOT MAKE SENSE - Pipfile requires exact version, not a range, and it's optional
+            # version=self.diff_version(),
         )
 
     def diff_dependencies(self):
