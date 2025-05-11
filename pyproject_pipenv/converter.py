@@ -47,8 +47,6 @@ class Converter:
     def diff(self) -> Diff:
         return Diff(
             deps=self.diff_dependencies(),
-            # TODO: drop version as it DOES NOT MAKE SENSE - Pipfile requires exact version, not a range, and it's optional
-            # version=self.diff_version(),
         )
 
     def diff_dependencies(self):
@@ -69,12 +67,5 @@ class Converter:
 
     def sync(self):
         self.pyproject_content['project']['dependencies'] = self.pipfile_list_dependencies()
-        if self.pipfile_version():
-            self.pyproject_content['project']['requires-python'] = self.pipfile_version()
-        else:
-            try:
-                del self.pyproject_content['project']['requires-python']
-            except KeyError:
-                """all good if not there"""
         with open(self.pyproject_path, 'w') as f:
             f.write(tomlkit.dumps(self.pyproject_content))
