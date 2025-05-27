@@ -51,7 +51,7 @@ pyproject.toml UPDATED!
 
 ## ToDo
 
-* Handle markers and all that extra crap besides version
+* ~~Handle markers and all that extra crap besides version~~
 * Sync more fields
 
 ## Context
