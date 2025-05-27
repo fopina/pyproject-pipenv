@@ -26,8 +26,10 @@ class Converter:
     def pipfile_list_dependencies(self):
         packages = []
         for name, version_dict in self.pipfile_content.get('packages', {}).items():
+            markers = ''
             if isinstance(version_dict, dict):
-                version = version_dict['version']
+                version = version_dict.get('version', '')
+                markers = version_dict.get('markers', '')
             else:
                 version = version_dict
             if version == '*':
@@ -35,7 +37,10 @@ class Converter:
             elif version[0].isdigit():
                 # manually edited Pipfile can have version without operator and it is valid
                 version = f'=={version}'
-            packages.append(f'{name}{version}')
+            package = f'{name}{version}'
+            if markers:
+                package += f'; {markers}'
+            packages.append(package)
         return packages
 
     def pyproject_version(self):

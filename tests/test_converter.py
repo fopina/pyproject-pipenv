@@ -28,3 +28,9 @@ class Test(unittest.TestCase):
         self.assertIsNone(d.deps)
         self.assertEqual(d.version.pipfile, '>=3.10,<4')
         self.assertEqual(d.version.pyproject, '>=3.9')
+
+    def test_markers(self):
+        c = converter.Converter(DATA / 'Pipfile.5', DATA / 'pyproject.5.toml')
+        d = c.diff()
+        self.assertIsNone(d.deps)
+        self.assertIsNone(d.version)
