@@ -6,6 +6,8 @@
 [![Very popular](https://img.shields.io/pypi/dm/pyproject-pipenv)](https://pypistats.org/packages/pyproject-pipenv)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
+> **DEPRECATED** I've moved from pipenv to uv-based workflow
+
 Sync properties from Pipfile to pyproject.toml.
 
 Never need again to change dependencies manually in pyproject.toml (or forget to do it and publish a broken package), and enjoy the same dependency locking or semantic versioning.
